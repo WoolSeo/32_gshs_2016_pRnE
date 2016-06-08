@@ -10,18 +10,23 @@
 using namespace std;
 
 /*파일 출력을 txt파일에 하기 위한 준비*/
-FILE *fout = fopen("8-out100.txt", "w");
+FILE *fout = fopen("8-out10000.txt", "w");
 
 int main()
 {
-    int p, l, t=0, k, m, a, e1, total=0;
-    long long int i, j, n=1, num=0;
-    int o[100][100];
-    float e, ave;
-    
-    e=0.1;
-    e1=10;
-    l=8;
+	int o[100][100]; /* 값을 저장하기 위한 배열값 */ 
+	int p; /* 민주적인 정도 */ 
+	int l=8; /* tree model의 level수 */
+	int t=0; /* 실행 횟수 관리를 위한 변수  */ 
+	int k, m; /* 계산을 위한 변수 */ 
+	int total=0; /*배열값의 합*/ 
+	int a; /*임의의 변수*/ 
+	long long int i, j; /* 임의의 변수*/
+	long long int n; /* pow(3,k)를 저장하기 위한 변수 */ 
+	long long int cnt=0; /*변수의 개수*/ 
+	float e=0.1; /* 1- (상대가 틀린 선택을 했을 경우의 바뀔 확률) */ 
+	int e1=10; /* 1/e의 int 값 */ 
+	float ave; /* 평균값 */ 
     
     /* rand 함수를 사용하기 위한 준비 */
     srand(time(NULL));
@@ -33,7 +38,7 @@ int main()
         {
             o[i][j]=rand()%2;
             total+=(o[i][j]-0.5)*2;
-            num++;
+            cnt++;
         }
     }
     
@@ -41,10 +46,10 @@ int main()
     total=total-(o[0][0]-0.5)*2 -1;
     o[0][0]=0;
     
-    while (t<100)
+    while (t<10000)
     {
         k=rand()%(l-1)+1;
-        n=pow(3, k);
+        n=pow(3,k);
         m=rand()%n;
         a=m/3;
         
@@ -54,7 +59,7 @@ int main()
         t++;
         
         /* 단계에서의 평균을 구하고 이를 출력한다 */
-        ave=(float)total/num;
-	fprintf(fout, "%f\n", ave);
+        ave=(float)total/cnt;
+		fprintf(fout, "%f\n", ave);
     }
 }
